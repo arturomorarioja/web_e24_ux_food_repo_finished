@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+:root {
+    --fontMain: 'Noto Sans', serif;
+    --fontHeader: 'Afacad Flux', sans-serif;
+
+    --colourMain: #003333;
+    --colourBgMain: #FFF3E8; 
+    --colourBgSecondary: #308030;
+
+    --colourError: red;
+    --colourBorder: lightgrey;
+    --colourFoodType: #80305D;
+    --colourArea: #A0693C;
+
+    --marginMain: 1rem;
+    --marginSmall: 0.5rem;
+    --marginTiny: 0.1rem;
+
+    --recipeThumbnailDimension: 100px;
+    --recipePictureWidth: 320px;
+    --recipePictureWidthBig: 480px;
+}
