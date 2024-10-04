@@ -41,6 +41,7 @@ const handleRecipe = (data) => {
     thumbnail.src = `http://img.youtube.com/vi/${youtubeID}/mqdefault.jpg`;
 
     thumbnail.addEventListener('load', function() {
+        console.log('Here');
         if (this.width !== 120) {
             recipeInfo += `
                 <iframe 
@@ -52,8 +53,8 @@ const handleRecipe = (data) => {
                     allowfullscreen>
                 </iframe>
             `;
-            recipeInfoSection.innerHTML = recipeInfo; 
         }
+        recipeInfoSection.innerHTML = recipeInfo; 
     });
 };
 
