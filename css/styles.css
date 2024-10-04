@@ -19,6 +19,29 @@ body {
         color: var(--colourBgMain);
         background-color: var(--colourBgSecondary);
     }
+    nav {
+        background-color: var(--colourBgTertiary);
+        ul {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-around;
+            margin: 0;
+            li {
+                display: inline-block;
+                list-style-type: none;
+                * {
+                    font-size: 1em;
+                }
+                a, button {
+                    color: var(--colourBgMain);
+                }
+                button {
+                    border: none;
+                    background-color: var(--colourBgTertiary);
+                }
+            }
+        }
+    }
     section {
         margin: var(--marginMain);
         header {
@@ -34,6 +57,9 @@ body {
     }
     article {
         margin-bottom: calc(var(--marginMain) * 2);
+    }
+    a {
+        text-decoration: none;
     }
     .standout {
         font-size: 1.2rem;
@@ -75,7 +101,6 @@ body {
                 padding: 0 var(--marginMain);
                 line-height: 1.2rem;
                 a {
-                    text-decoration: none;
                     color: var(--colourBgSecondary);
                 }
             }
@@ -87,11 +112,12 @@ body {
             > div {
                 grid-column: 2 / 3;
                 grid-row: 2 / 3;
-                padding: 0 var(--marginMain);
                 > * {
+                    margin: var(--marginTiny) var(--marginMain) 0 var(--marginMain);
+                    padding: 0 var(--marginMain);
                     width: auto;
                     font-size: 0.9rem;
-                }
+                }        
             }
         }
     }

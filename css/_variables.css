@@ -6,10 +6,11 @@
     --colourMain: #003333;
     --colourBgMain: #FFF3E8; 
     --colourBgSecondary: #308030;
+    --colourBgTertiary: #80305D;
 
     --colourError: red;
     --colourBorder: lightgrey;
-    --colourFoodType: #80305D;
+    --colourFoodType: #9F527E;
     --colourArea: #A0693C;
 
     --marginMain: 1rem;
