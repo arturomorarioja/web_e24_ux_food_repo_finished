@@ -13,7 +13,7 @@ body {
     header, footer {
         font-family: var(--fontHeader);
     }
-    > header, > footer {
+    > header, dialog > header, > footer {
         text-align: center;
         padding: var(--marginSmall) var(--marginMain);
         color: var(--colourBgMain);
@@ -39,6 +39,9 @@ body {
                     border: none;
                     background-color: var(--colourBgTertiary);
                 }
+                button:hover {
+                    cursor: pointer;
+                }
             }
         }
     }
@@ -46,6 +49,9 @@ body {
         margin: var(--marginMain);
         header {
             text-align: left;
+        }
+        > section {
+            margin: 0;
         }
     }
     ul, ol {
@@ -128,5 +134,52 @@ body {
     }
     .error {
         color: var(--colourError);
+    }
+    address {
+        font-size: 0.9rem;
+        text-indent: var(--marginMain);
+        margin-bottom: var(--marginMain);
+        p:nth-of-type(2) {
+            margin-bottom: var(--marginSmall);
+        }
+    }
+
+    form {
+        border-top: var(--marginTiny) solid var(--colourBgTertiary);
+        > div:not(:has(input[type="submit"])) {
+            display: flex;
+            flex-flow: column wrap;
+            margin: var(--marginSmall) 0;
+            textarea {
+                height: calc(5 * var(--marginMain));
+            }
+        }
+        input[type="submit"] {
+            width: auto;
+            padding: var(--marginSmall) var(--marginMain);
+            border: var(--marginTiny) solid var(--colourBgSecondary);
+            border-radius: var(--marginMain);
+            font-size: 1rem;
+            color: var(--colourBgMain);
+            background-color: var(--colourBgSecondary);
+        }
+    }
+
+    dialog {
+        margin: 6rem auto 0 auto;
+        border-color: var(--colourBgSecondary);
+        border-radius: var(--marginSmall);            
+        header {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            padding: 0;
+            .close {
+                cursor: pointer;
+            }
+        }
+        :not(header) {
+            padding: var(--marginSmall) var(--marginMain);
+        }
     }
 }

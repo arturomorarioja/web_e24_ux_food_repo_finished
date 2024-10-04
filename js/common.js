@@ -1,6 +1,6 @@
 export const baseUrl = 'https://www.themealdb.com/api/json/v1/1';
 
-export const handleAPIError = function(response) {
+export const handleAPIError = (response) => {
     if (response.ok) {
         return response.json();
     }
