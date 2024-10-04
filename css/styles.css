@@ -135,15 +135,7 @@ body {
     .error {
         color: var(--colourError);
     }
-    address {
-        font-size: 0.9rem;
-        text-indent: var(--marginMain);
-        margin-bottom: var(--marginMain);
-        p:nth-of-type(2) {
-            margin-bottom: var(--marginSmall);
-        }
-    }
-
+    
     form {
         border-top: var(--marginTiny) solid var(--colourBgTertiary);
         > div:not(:has(input[type="submit"])) {
@@ -158,7 +150,7 @@ body {
             width: auto;
             padding: var(--marginSmall) var(--marginMain);
             border: var(--marginTiny) solid var(--colourBgSecondary);
-            border-radius: var(--marginMain);
+            border-radius: calc(2 * var(--marginMain));
             font-size: 1rem;
             color: var(--colourBgMain);
             background-color: var(--colourBgSecondary);
@@ -178,8 +170,26 @@ body {
                 cursor: pointer;
             }
         }
-        :not(header) {
+        :not(header):not(section) {
             padding: var(--marginSmall) var(--marginMain);
         }
+        address > * {
+            padding: 0;
+            margin: 0;
+        }
+        #address {
+            margin: 0 var(--marginMain) !important;
+        }
+    }
+}
+
+address {
+    font-size: 0.9rem;
+    text-indent: var(--marginMain);
+    margin-bottom: var(--marginMain);
+    padding-top: var(--marginSmall);
+    border-top: var(--marginTiny) solid var(--colourBgTertiary);
+    p:nth-of-type(2) {
+        margin-bottom: var(--marginSmall);
     }
 }
