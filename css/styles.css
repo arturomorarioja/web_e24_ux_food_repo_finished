@@ -209,6 +209,9 @@ body {
             margin: 0 var(--marginMain) !important;
         }
     }
+    dialog#msgAbout {
+        max-height: 80vh;
+    }
 }
 
 address {

@@ -19,6 +19,7 @@ document.querySelector('nav #about').addEventListener('click', () => {
             </address>
         </section>
     `;
+    dialog.id = 'msgAbout';
     dialog.querySelector('.close').addEventListener('click', handleCloseDialogButton);
 
     document.body.append(dialog);
