@@ -11,14 +11,23 @@
 <body>
     <header>
         <h1>Food Repo</h1>
+        <label for="chkHamburgerMenu">
+            <svg viewBox='-5 0 10 8' width='40'>
+                <line y2='8' 
+                stroke='#FFF' 
+                stroke-width='10' 
+                stroke-dasharray='2 1'/>
+            </svg>        
+        </label>
+        <input type="checkbox" id="chkHamburgerMenu" hidden>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><button id="about">About</button></li>
+                <li><a href="contact.htm">Contact</a></li>
+            </ul>
+        </nav>
     </header>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><button id="about">About</button></li>
-            <li><a href="contact.htm">Contact</a></li>
-        </ul>
-    </nav>
     <main>
         <section id="recipe-list">
             <header>
