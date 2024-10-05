@@ -121,11 +121,14 @@ body {
     }
     #recipe-cards {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-        grid-template-rows: minmax(auto, 1fr);
-        justify-content: stretch;
-        align-content: stretch;
-        align-items: start;
+        /*
+            auto-fill: Grid fills the row, creating as many columns as it can
+            minmax: no column will be smaller than --recipeColumnMaxWidth
+                    or wider than one fraction (auto-fill ensures that fractions
+                    will be only wide enough to fit more columns)
+        */
+        grid-template-columns: repeat(auto-fill, minmax(var(--recipeColumnMaxWidth), 1fr));
+        grid-template-rows: repeat(2, auto);
         gap: var(--marginMain);
         article {
             display: grid;

@@ -20,4 +20,5 @@
     --recipeThumbnailDimension: 100px;
     --recipePictureWidth: 320px;
     --recipePictureWidthBig: 480px;
+    --recipeColumnMaxWidth: 15rem;
 }
