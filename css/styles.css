@@ -185,8 +185,33 @@ body {
         }
     }
     #recipe-info {
-        section {
+        > section {
             margin: var(--marginMain) 0;
+        }
+    @media (min-width: 680px) {
+            display: grid;
+            grid-template-areas:
+            "header header"
+            "picture description"
+            "ingredients video";
+            grid-template-columns: repeat(2, auto);
+            grid-template-rows: repeat(3, auto);
+            gap: var(--marginMain);
+            > header {
+                grid-area: header;
+            }
+            > img {
+                grid-area: picture;
+            }
+            > p {
+                grid-area: description;
+            }
+            > section {
+                grid-area: ingredients;
+            }
+            > iframe {
+                grid-area: video;
+            }
         }
     }
     .error {
@@ -253,4 +278,8 @@ address {
     p:nth-of-type(2) {
         margin-bottom: var(--marginSmall);
     }
+}
+
+.hidden {
+    display: none;
 }
