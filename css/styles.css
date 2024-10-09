@@ -48,13 +48,13 @@ body {
                 list-style-type: none;
                 text-align: center;
                 a, button {
+                    font-family: var(--fontHeader);
                     font-size: 1rem;
                     color: var(--colourBgMain);
                 }                
                 button {
                     border: none;
                     background-color: var(--colourBgTertiary);
-                    font-size: 0.9rem;
                 }
                 button:hover {
                     cursor: pointer;
@@ -62,8 +62,9 @@ body {
             }
         }
         &#utility {
-            a {
+            a, button {
                 color: var(--colourBgTertiary);
+                background-color: var(--colourBgMain);
             }
             background-color: var(--colourBgMain);
             border-bottom: thin solid var(--colourBgTertiary);
@@ -188,7 +189,20 @@ body {
         > section {
             margin: var(--marginMain) 0;
         }
-    @media (min-width: 680px) {
+        header {
+            > * {
+                display: inline-block;
+            }
+            .favourite {
+                background-color: var(--colourBgMain);
+                border: none;
+                font-size: 1.8rem;
+                margin-left: var(--marginMain);
+                vertical-align: bottom;
+                cursor: pointer;
+            }
+        }
+        @media (min-width: 680px) {
             display: grid;
             grid-template-areas:
             "header header"

@@ -1,5 +1,8 @@
 import { baseUrl, handleAPIError } from './common.js';
 
+const nonFavourited = '&#9734;';
+const favourited = '&#9733';
+
 const recipeInfoSection = document.querySelector('#recipe-info');
 
 let recipeID = new URLSearchParams(window.location.search);
@@ -13,6 +16,7 @@ const handleRecipe = (data) => {
     let recipeInfo = `
         <header>
             <h2>${recipe.strMeal}</h2>
+            <button class="favourite">${nonFavourited}</button>
         </header>
         <img src="${recipe.strMealThumb}" alt="">
         <p>${recipe.strInstructions}</p>
@@ -41,7 +45,6 @@ const handleRecipe = (data) => {
     thumbnail.src = `http://img.youtube.com/vi/${youtubeID}/mqdefault.jpg`;
 
     thumbnail.addEventListener('load', function() {
-        console.log('Here');
         if (this.width !== 120) {
             recipeInfo += `
                 <iframe 
@@ -54,9 +57,27 @@ const handleRecipe = (data) => {
                 </iframe>
             `;
         }
-        recipeInfoSection.innerHTML = recipeInfo; 
+        recipeInfoSection.innerHTML = recipeInfo;
+
+        handleFavouriting();
     });
 };
+
+/**
+ * Favourite/unfavourite recipe
+ */
+const handleFavouriting = () => {
+    document.querySelector('.favourite').addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        if (this.innerHTML === '☆') {
+            this.innerHTML = favourited;
+        } else {
+            this.innerHTML = nonFavourited;
+        }
+    });
+}
+
 
 fetch(`${baseUrl}//lookup.php?i=${recipeID}`)
 .then(handleAPIError)
@@ -67,4 +88,4 @@ fetch(`${baseUrl}//lookup.php?i=${recipeID}`)
         <p>Dear user, we are truly sorry to inform that there was an error while getting the data</p>
         <p class="error">${error}</p>
     `;
-})
+});
