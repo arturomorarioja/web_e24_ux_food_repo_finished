@@ -1,4 +1,4 @@
-import { baseUrl, handleAPIError } from './common.js';
+import { baseUrl, baseUserUrl, handleAPIError } from './common.js';
 
 const nonFavourited = '&#9734;';
 const favourited = '&#9733';
@@ -70,14 +70,43 @@ const handleFavouriting = () => {
     document.querySelector('.favourite').addEventListener('click', function(e) {
         e.preventDefault();
         
-        if (this.innerHTML === '☆') {
-            this.innerHTML = favourited;
-        } else {
-            this.innerHTML = nonFavourited;
-        }
+        // if (this.innerHTML === '☆') {
+            const userID = sessionStorage.getItem('food_repo_user_id');
+            const params = new URLSearchParams();
+            const method = this.innerHTML === '☆' ? 'POST' : 'DELETE';
+            params.append('recipe_id', recipeID);
+            
+            fetch(`${baseUserUrl}/users/${userID}/favourites`, {
+                method: method,
+                body: params
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.status === 'ok') {
+                    if (method === 'POST') {
+                        this.innerHTML = favourited;
+                    } else {                        
+                        this.innerHTML = nonFavourited;
+                    }
+                    //// remove from sessionStorage (reload all favourites)
+                } else {
+                    throw new Error(data.error);
+                }
+            })
+            .catch((error) => {
+                recipeInfoSection.innerHTML = `
+                    <h3>Error</h3>
+                    <p>Dear user, we are truly sorry to inform that there was an error while getting the data</p>
+                    <p class="error">${error}</p>
+                `;
+            });
+
+        // } else {
+        //     this.innerHTML = nonFavourited;
+        // }
     });
 }
-
 
 fetch(`${baseUrl}//lookup.php?i=${recipeID}`)
 .then(handleAPIError)
