@@ -211,6 +211,7 @@ body {
             font-size: 1rem;
             color: var(--colourBgMain);
             background-color: var(--colourBgSecondary);
+            cursor: pointer;
         }
     }
 
