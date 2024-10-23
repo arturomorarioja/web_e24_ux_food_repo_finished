@@ -1,5 +1,4 @@
-import { baseUserUrl } from './common.js';
-import { loadFavourites } from './favourites.js';
+import { baseUserUrl, loadFavourites } from './common.js';
 
 document.querySelector('#frmLogin').addEventListener('submit', (e) => {
     e.preventDefault();

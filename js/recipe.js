@@ -1,7 +1,7 @@
-import { baseUrl, baseUserUrl, handleAPIError } from './common.js';
+import { baseUrl, baseUserUrl, handleAPIError, loadFavourites } from './common.js';
 
-const nonFavourited = '&#9734;';
-const favourited = '&#9733';
+const NON_FAVOURITED = '&#9734;';
+const FAVOURITED = '&#9733';
 
 const recipeInfoSection = document.querySelector('#recipe-info');
 
@@ -15,7 +15,7 @@ const handleRecipe = (data) => {
     let recipeInfo = `
         <header>
             <h2>${recipe.strMeal}</h2>
-            <button class="favourite">${nonFavourited}</button>
+            <button class="favourite">${NON_FAVOURITED}</button>
         </header>
         <img src="${recipe.strMealThumb}" alt="">
         <p>${recipe.strInstructions}</p>
@@ -84,11 +84,11 @@ const handleFavouriting = () => {
                 console.log(data);
                 if (data.status === 'ok') {
                     if (method === 'POST') {
-                        this.innerHTML = favourited;
+                        this.innerHTML = FAVOURITED;
                     } else {                        
-                        this.innerHTML = nonFavourited;
+                        this.innerHTML = NON_FAVOURITED;
                     }
-                    //// remove from sessionStorage (reload all favourites)
+                    loadFavourites(userID);
                 } else {
                     throw new Error(data.error);
                 }
@@ -102,7 +102,7 @@ const handleFavouriting = () => {
             });
 
         // } else {
-        //     this.innerHTML = nonFavourited;
+        //     this.innerHTML = NON_FAVOURITED;
         // }
     });
 }

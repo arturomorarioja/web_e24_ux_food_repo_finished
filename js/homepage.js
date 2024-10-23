@@ -1,5 +1,4 @@
-import { baseUrl, handleAPIError } from './common.js';
-import { handleRecipe } from './recipeCard.js';
+import { baseUrl, handleAPIError, handleRecipeCard } from './common.js';
 
 const NUM_RECIPES_TO_SHOW = 10;
 
@@ -9,7 +8,7 @@ const recipeInfoSection = document.querySelector('#recipe-cards');
 for (let index = 0; index < NUM_RECIPES_TO_SHOW; index++) {
     fetch(`${baseUrl}/random.php`)
     .then(handleAPIError)
-    .then(handleRecipe)
+    .then(handleRecipeCard)
     .catch((error) => {
         recipeInfoSection.innerHTML = `
         <h3>Error</h3>
