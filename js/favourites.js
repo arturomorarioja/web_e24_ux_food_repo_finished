@@ -1,16 +1,25 @@
+import { baseUrl, handleAPIError } from './common.js';
 import { baseUserUrl } from './common.js';
+import { handleRecipe } from './recipeCard.js';
 
 const userID = sessionStorage.getItem('food_repo_user_id');
 
 fetch(`${baseUserUrl}/users/${userID}/favourites`)
-.then(response => response.json())
+.then(handleAPIError)
 .then(data => {
-    let recipes = '<ul>'
+    console.log(data);
     data.recipes.forEach((recipe) => {
-        recipes += `<li>${recipe.recipe_id}</li>`;
+        fetch(`${baseUrl}/lookup.php?i=${recipe.recipe_id}`)
+        .then(handleAPIError)
+        .then(handleRecipe)
+        .catch((error) => {
+            recipeInfoSection.innerHTML = `
+                <h3>Error</h3>
+                <p>Dear user, we are truly sorry to inform that there was an error while getting the data</p>
+                <p class="error">${error}</p>
+            `;
+        })
     });
-    recipes += '</ul>'
-    document.querySelector('#favourites').innerHTML = recipes;
 });
 
 export const loadFavourites = (userID) => {

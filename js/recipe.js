@@ -9,7 +9,6 @@ let recipeID = new URLSearchParams(window.location.search);
 recipeID = recipeID.get('id');
 
 const handleRecipe = (data) => {
-
     const recipe = data.meals[0];
 
     const MAX_INGREDIENTS = 20;
