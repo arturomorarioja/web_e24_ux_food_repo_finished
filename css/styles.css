@@ -18,6 +18,9 @@ body {
         padding: var(--marginSmall) var(--marginMain);
         color: var(--colourBgMain);
         background-color: var(--colourBgSecondary);
+        a {
+            color: var(--colourBgMain);
+        }
     }
     > header {
         display: grid;
