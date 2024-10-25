@@ -1,4 +1,4 @@
-import { baseUserUrl, loadFavourites } from './common.js';
+import { baseUserUrl, loadFavourites, handleAPIError, handleFetchCatchError } from './common.js';
 
 document.querySelector('#frmLogin').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -14,20 +14,18 @@ document.querySelector('#frmLogin').addEventListener('submit', (e) => {
         method: 'POST',
         body: params
     })
-    .then(response => response.json())
+    .then(handleAPIError)
     .then(data => {
         if (Object.keys(data).includes('user_id')) {
             sessionStorage.setItem('food_repo_user_id', data.user_id);
-            loadFavourites(data.user_id);
+            // As loadFavourites returns a promise, it can be treated asynchronously, 
+            // making the page redirection wait until loadFavourites is finished
+            loadFavourites(data.user_id).then(() => {
+                window.location.href = 'index.html';
+            });
         } else {
             throw new Error(data.error);
         }
     })
-    .catch((error) => {
-        document.querySelector('section').innerHTML = `
-            <h3>Error</h3>
-            <p>Dear user, we are truly sorry to inform that there was an error while processing the data</p>
-            <p class="error">${error}</p>
-        `;        
-    })
+    .catch(handleFetchCatchError);
 });

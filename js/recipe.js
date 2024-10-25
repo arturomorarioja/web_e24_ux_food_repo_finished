@@ -1,4 +1,4 @@
-import { baseUrl, baseUserUrl, handleAPIError, loadFavourites, isFavourite } from './common.js';
+import { baseUrl, baseUserUrl, handleAPIError, handleFetchCatchError, loadFavourites, isFavourite, loggedUserID } from './common.js';
 
 const NON_FAVOURITED = '&#9734;';
 const FAVOURITED = '&#9733';
@@ -8,15 +8,24 @@ const recipeInfoSection = document.querySelector('#recipe-info');
 let recipeID = new URLSearchParams(window.location.search);
 recipeID = recipeID.get('id');
 
+/**
+ * Display recipe information on the page
+ */
 const handleRecipe = (data) => {
     const recipe = data.meals[0];
 
     const MAX_INGREDIENTS = 20;
-    const favourite = isFavourite(recipe.idMeal) ? FAVOURITED : NON_FAVOURITED;
     let recipeInfo = `
-        <header>
-            <h2>${recipe.strMeal}</h2>
+    <header>
+    <h2>${recipe.strMeal}</h2>
+    `;
+    if (loggedUserID()) {
+        const favourite = isFavourite(recipe.idMeal) ? FAVOURITED : NON_FAVOURITED;
+        recipeInfo += `
             <button class="favourite">${favourite}</button>
+        `;
+    }
+    recipeInfo += `
         </header>
         <img src="${recipe.strMealThumb}" alt="">
         <p>${recipe.strInstructions}</p>
@@ -59,7 +68,9 @@ const handleRecipe = (data) => {
         }
         recipeInfoSection.innerHTML = recipeInfo;
 
-        handleFavouriting();
+        if (loggedUserID()) {
+            handleFavouriting();
+        }
     });
 };
 
@@ -70,51 +81,34 @@ const handleFavouriting = () => {
     document.querySelector('.favourite').addEventListener('click', function(e) {
         e.preventDefault();
         
-        // if (this.innerHTML === '☆') {
-            const userID = sessionStorage.getItem('food_repo_user_id');
-            const params = new URLSearchParams();
-            const method = this.innerHTML === '☆' ? 'POST' : 'DELETE';
-            params.append('recipe_id', recipeID);
-            
-            fetch(`${baseUserUrl}/users/${userID}/favourites`, {
-                method: method,
-                body: params
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                if (data.status === 'ok') {
-                    if (method === 'POST') {
-                        this.innerHTML = FAVOURITED;
-                    } else {                        
-                        this.innerHTML = NON_FAVOURITED;
-                    }
-                    loadFavourites(userID);
-                } else {
-                    throw new Error(data.error);
+        const userID = sessionStorage.getItem('food_repo_user_id');
+        const params = new URLSearchParams();
+        const method = this.innerHTML === '☆' ? 'POST' : 'DELETE';
+        params.append('recipe_id', recipeID);
+        
+        fetch(`${baseUserUrl}/users/${userID}/favourites`, {
+            method: method,
+            body: params
+        })
+        .then(handleAPIError)
+        .then(data => {
+            console.log(data);
+            if (data.status === 'ok') {
+                if (method === 'POST') {
+                    this.innerHTML = FAVOURITED;
+                } else {                        
+                    this.innerHTML = NON_FAVOURITED;
                 }
-            })
-            .catch((error) => {
-                recipeInfoSection.innerHTML = `
-                    <h3>Error</h3>
-                    <p>Dear user, we are truly sorry to inform that there was an error while getting the data</p>
-                    <p class="error">${error}</p>
-                `;
-            });
-
-        // } else {
-        //     this.innerHTML = NON_FAVOURITED;
-        // }
+                loadFavourites(userID);
+            } else {
+                throw new Error(data.error);
+            }
+        })
+        .catch(handleFetchCatchError);
     });
 }
 
 fetch(`${baseUrl}//lookup.php?i=${recipeID}`)
 .then(handleAPIError)
 .then(handleRecipe)
-.catch((error) => {
-    recipeInfoSection.innerHTML = `
-        <h3>Error</h3>
-        <p>Dear user, we are truly sorry to inform that there was an error while getting the data</p>
-        <p class="error">${error}</p>
-    `;
-});
+.catch(handleFetchCatchError);

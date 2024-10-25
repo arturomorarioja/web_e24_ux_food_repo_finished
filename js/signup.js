@@ -1,4 +1,4 @@
-import { baseUserUrl } from './common.js';
+import { baseUserUrl, handleAPIError, handleFetchCatchError } from './common.js';
 
 document.querySelector('#frmSignup').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ document.querySelector('#frmSignup').addEventListener('submit', (e) => {
         method: 'POST',
         body: params
     })
-    .then(response => response.json())
+    .then(handleAPIError)
     .then(data => {
         if (Object.keys(data).includes('user_id')) {
             window.location.href = 'login.htm';
@@ -33,11 +33,5 @@ document.querySelector('#frmSignup').addEventListener('submit', (e) => {
             throw new Error(data.error);
         }
     })
-    .catch((error) => {
-        document.querySelector('section').innerHTML = `
-            <h3>Error</h3>
-            <p>Dear user, we are truly sorry to inform that there was an error while processing the data</p>
-            <p class="error">${error}</p>
-        `;        
-    });
+    .catch(handleFetchCatchError);
 });

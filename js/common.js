@@ -8,6 +8,18 @@ export const handleAPIError = (response) => {
     console.log('There was an error');
 }
 
+export const handleFetchCatchError = (error) => {
+    const errorSection = document.createElement('section');
+    errorSection.innerHTML = `
+        <header>    
+            <h3>Error</h3>
+        </header>
+        <p>Dear user, we are truly sorry to inform that there was an error while getting the data</p>
+        <p class="error">${error}</p>
+    `;
+    document.querySelector('main').append(errorSection);
+}
+
 export const loggedUserID = () => {
     return sessionStorage.getItem('food_repo_user_id') || 0;
 }
@@ -45,21 +57,14 @@ export const handleRecipeCard = function(data) {
 /**
  * Loads favourites in sessionStorage
  */
-export const loadFavourites = (userID) => {
-    fetch(`${baseUserUrl}/users/${userID}/favourites`)
-    .then(response => response.json())
-    .then(data => {
-        sessionStorage.setItem('food_repo_favourites', JSON.stringify(data.recipes));
-
-        window.location.href = 'index.html';
-    })
-    .catch(error => {
-        document.querySelector('section').innerHTML = `
-            <h3>Error</h3>
-            <p>Dear user, we are truly sorry to inform that there was an error while processing the data</p>
-            <p class="error">${error}</p>
-        `;        
-    });
+export const loadFavourites = async (userID) => {
+    // A promise is returned, so that it can be treated asynchronously by the caller
+    return fetch(`${baseUserUrl}/users/${userID}/favourites`)
+        .then(handleAPIError)
+        .then(data => {
+            sessionStorage.setItem('food_repo_favourites', JSON.stringify(data.recipes));
+        })
+        .catch(handleFetchCatchError);
 }
 
 /**
