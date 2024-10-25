@@ -5,6 +5,8 @@ document.querySelector('#frmContact').addEventListener('submit', (e) => {
 
     document.querySelector('#msgInfoSent').showModal();
 
+    // Of course, the form information is not sent anywhere
+
     e.target.reset();
 });
 

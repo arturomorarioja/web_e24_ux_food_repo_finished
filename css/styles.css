@@ -282,6 +282,32 @@ body {
     dialog#msgAbout {
         max-height: 80vh;
     }
+    
+    footer {
+        display: flex;
+        flex-flow: row wrap;
+        > * {
+            width: 100%;
+        }
+        > div {
+            margin-top: var(--marginSmall);
+            font-size: 0.8rem;
+            a {
+                color: var(--colourBorder);
+            }
+        }
+        @media (min-width: 600px) {
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            > p {
+                text-align: left;
+            }
+            > div {
+                margin-top: 0;
+                text-align: right;
+            }
+        }
+    }
 }
 
 address {

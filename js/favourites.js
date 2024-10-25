@@ -1,22 +1,23 @@
-import { baseUrl, handleAPIError } from './common.js';
-import { baseUserUrl, handleRecipeCard } from './common.js';
+import { baseUrl, handleAPIError, handleFetchCatchError, baseUserUrl, handleRecipeCard, loggedUserID } from './common.js';
 
-const userID = sessionStorage.getItem('food_repo_user_id');
-
-fetch(`${baseUserUrl}/users/${userID}/favourites`)
+/**
+ * Gets the favourite recipe ID for the current user from the user API,
+ * then gets information for each favourited recipe from the Meal DB API
+ */
+fetch(`${baseUserUrl}/users/${loggedUserID()}/favourites`)
 .then(handleAPIError)
 .then(data => {
-    console.log(data);
-    data.recipes.forEach((recipe) => {
-        fetch(`${baseUrl}/lookup.php?i=${recipe.recipe_id}`)
-        .then(handleAPIError)
-        .then(handleRecipeCard)
-        .catch((error) => {
-            document.querySelector('section').innerHTML = `
-                <h3>Error</h3>
-                <p>Dear user, we are truly sorry to inform that there was an error while getting the data</p>
-                <p class="error">${error}</p>
-            `;
-        })
-    });
-});
+    if (data.recipes.length === 0) {
+        const message = document.createElement('p');
+        message.innerText = 'This user has not marked any recipe as favourite yet.';
+        document.querySelector('#recipe-cards').append(message);
+    } else {
+        data.recipes.forEach((recipe) => {
+            fetch(`${baseUrl}/lookup.php?i=${recipe.recipe_id}`)
+            .then(handleAPIError)
+            .then(handleRecipeCard)
+            .catch(handleFetchCatchError);
+        });
+    }
+})
+.catch(handleFetchCatchError);

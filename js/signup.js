@@ -3,6 +3,7 @@ import { baseUserUrl, handleAPIError, handleFetchCatchError } from './common.js'
 document.querySelector('#frmSignup').addEventListener('submit', (e) => {
     e.preventDefault();
 
+    // Input validation. Both passwords must match
     const password = e.target.txtPassword.value.trim();
     const repeatPassword = e.target.txtRepeatPassword.value.trim();
 
@@ -11,6 +12,7 @@ document.querySelector('#frmSignup').addEventListener('submit', (e) => {
         return false;
     }
 
+    // Sign up in the API
     const firstName = e.target.txtFirstname.value.trim();
     const lastName = e.target.txtLastname.value.trim();
     const email = e.target.txtEmail.value.trim();
@@ -27,6 +29,7 @@ document.querySelector('#frmSignup').addEventListener('submit', (e) => {
     })
     .then(handleAPIError)
     .then(data => {
+        // Check for key "user_id" in response
         if (Object.keys(data).includes('user_id')) {
             window.location.href = 'login.htm';
         } else {

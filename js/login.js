@@ -16,6 +16,7 @@ document.querySelector('#frmLogin').addEventListener('submit', (e) => {
     })
     .then(handleAPIError)
     .then(data => {
+        // Check for key "user_id" in response
         if (Object.keys(data).includes('user_id')) {
             sessionStorage.setItem('food_repo_user_id', data.user_id);
             // As loadFavourites returns a promise, it can be treated asynchronously, 

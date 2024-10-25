@@ -1,5 +1,9 @@
-import { loggedUserID, logout } from "./common.js";
+import { loggedUserID, logout } from './common.js';
 
+/**
+ * Menu options are hidden or displayed 
+ * depending on whether the user is logged in or not
+ */
 const userID = loggedUserID();
 const favouritesLink = document.querySelector('li:has(a[href="favourites.htm"])');
 if (userID == 0) {
@@ -20,8 +24,13 @@ if (userID == 0) {
     }
 }
 
+/**
+ * "About" dialog
+ */
 document.querySelector('nav #about').addEventListener('click', () => {
     
+    // By creating the dialog dynamically, 
+    // it can be called from every page in the website
     const dialog = document.createElement('dialog');
     dialog.innerHTML = `
         <header>
