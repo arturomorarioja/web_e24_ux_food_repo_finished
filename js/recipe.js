@@ -1,4 +1,4 @@
-import { baseUrl, baseUserUrl, handleAPIError, loadFavourites } from './common.js';
+import { baseUrl, baseUserUrl, handleAPIError, loadFavourites, isFavourite } from './common.js';
 
 const NON_FAVOURITED = '&#9734;';
 const FAVOURITED = '&#9733';
@@ -12,10 +12,11 @@ const handleRecipe = (data) => {
     const recipe = data.meals[0];
 
     const MAX_INGREDIENTS = 20;
+    const favourite = isFavourite(recipe.idMeal) ? FAVOURITED : NON_FAVOURITED;
     let recipeInfo = `
         <header>
             <h2>${recipe.strMeal}</h2>
-            <button class="favourite">${NON_FAVOURITED}</button>
+            <button class="favourite">${favourite}</button>
         </header>
         <img src="${recipe.strMealThumb}" alt="">
         <p>${recipe.strInstructions}</p>

@@ -61,3 +61,11 @@ export const loadFavourites = (userID) => {
         `;        
     });
 }
+
+/**
+ * Returns true if the recipe whose ID it receives is the user's favourite, false otherwise
+ */
+export const isFavourite = (recipeID) => {
+    const favourites = JSON.parse(sessionStorage.getItem('food_repo_favourites'));
+    return favourites.find((recipe) => recipe.recipe_id === parseInt(recipeID)) !== undefined;
+}
