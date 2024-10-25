@@ -6,9 +6,21 @@
 }
 
 body {
+    display: flex;
+    flex-flow: row wrap;
+    > * {
+        width: 100%;
+    }
     font-family: var(--fontMain);
     color: var(--colourMain);
-    background-color: var(--colourBgMain);
+    @media (min-width: 1024px) {
+        max-width: 80%;
+        margin: 0 auto;
+        background-color: var(--colourMargin);
+        dialog {
+            max-width: 60%;
+        }
+    }
 
     header, footer {
         font-family: var(--fontHeader);
@@ -99,6 +111,9 @@ body {
             justify-content: space-around;
             padding: 0 var(--marginMain);
         }
+    }
+    main {
+        background-color: var(--colourBgMain);
     }
     section {
         margin: var(--marginMain);
