@@ -1,4 +1,5 @@
 import { baseUserUrl, handleAPIError, handleFetchCatchError } from './common.js';
+import { handleCloseDialogButton } from './nav.js';
 
 document.querySelector('#frmSignup').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -8,7 +9,7 @@ document.querySelector('#frmSignup').addEventListener('submit', (e) => {
     const repeatPassword = e.target.txtRepeatPassword.value.trim();
 
     if (password !== repeatPassword) {
-        alert('Passwords must match');
+        document.querySelector('#msgPasswordError').showModal();
         return false;
     }
 
@@ -38,3 +39,5 @@ document.querySelector('#frmSignup').addEventListener('submit', (e) => {
     })
     .catch(handleFetchCatchError);
 });
+
+document.querySelector('.close').addEventListener('click', handleCloseDialogButton);
