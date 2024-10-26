@@ -3,8 +3,6 @@ import { baseUrl, baseUserUrl, handleAPIError, handleFetchCatchError, loadFavour
 const NON_FAVOURITED = '&#9734;';
 const FAVOURITED = '&#9733';
 
-const recipeInfoSection = document.querySelector('#recipe-info');
-
 let recipeID = new URLSearchParams(window.location.search);
 recipeID = recipeID.get('id');
 
@@ -16,8 +14,8 @@ const handleRecipe = (data) => {
 
     const MAX_INGREDIENTS = 20;
     let recipeInfo = `
-    <header>
-    <h2>${recipe.strMeal}</h2>
+        <header>
+            <h2>${recipe.strMeal}</h2>
     `;
     if (loggedUserID()) {
         const favourite = isFavourite(recipe.idMeal) ? FAVOURITED : NON_FAVOURITED;
@@ -66,7 +64,7 @@ const handleRecipe = (data) => {
                 </iframe>
             `;
         }
-        recipeInfoSection.innerHTML = recipeInfo;
+        document.querySelector('#recipe-info').innerHTML = recipeInfo;
 
         if (loggedUserID()) {
             handleFavouriting();
@@ -108,7 +106,7 @@ const handleFavouriting = () => {
     });
 }
 
-fetch(`${baseUrl}//lookup.php?i=${recipeID}`)
+fetch(`${baseUrl}/lookup.php?i=${recipeID}`)
 .then(handleAPIError)
 .then(handleRecipe)
 .catch(handleFetchCatchError);
