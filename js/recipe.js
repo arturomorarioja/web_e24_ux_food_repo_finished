@@ -92,11 +92,7 @@ const handleFavouriting = () => {
         .then(data => {
             console.log(data);
             if (data.status === 'ok') {
-                if (method === 'POST') {
-                    this.innerHTML = FAVOURITED;
-                } else {                        
-                    this.innerHTML = NON_FAVOURITED;
-                }
+                this.innerHTML = method === 'POST' ? FAVOURITED : NON_FAVOURITED;
                 loadFavourites(userID);
             } else {
                 throw new Error(data.error);
