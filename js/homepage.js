@@ -5,9 +5,14 @@ import { baseUrl, handleAPIError, handleFetchCatchError, handleRecipeCard } from
  */
 const NUM_RECIPES_TO_SHOW = 10;
 
+const recipeContainer = document.createElement('div');
 for (let index = 0; index < NUM_RECIPES_TO_SHOW; index++) {
-    fetch(`${baseUrl}/random.php`)
+    // By waiting for fetch() to finish we avoid appending to the page for each recipe
+    await fetch(`${baseUrl}/random.php`)
     .then(handleAPIError)
-    .then(handleRecipeCard)
+    .then(data => {
+        recipeContainer.append(handleRecipeCard(data));
+    })
     .catch(handleFetchCatchError);
 }
+document.querySelector('#recipe-cards').innerHTML = recipeContainer.innerHTML;

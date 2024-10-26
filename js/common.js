@@ -62,7 +62,8 @@ export const handleRecipeCard = function(data) {
         </div>
     `;
 
-    document.querySelector('section#recipe-cards').append(recipeCard);        
+    // document.querySelector('section#recipe-cards').append(recipeCard);        
+    return recipeCard;
 }
 
 /**
